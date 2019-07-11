@@ -1,0 +1,30 @@
+{
+  "name": "aaa",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "DEBUG=insta-api:* nodemon ./bin/www"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "connect-mongo": "^3.0.0",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^8.0.0",
+    "express": "~4.16.0",
+    "express-session": "^1.16.2",
+    "google-books-search": "^0.3.1",
+    "http-errors": "~1.6.2",
+    "mongoose": "^5.6.1",
+    "morgan": "~1.9.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
