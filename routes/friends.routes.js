@@ -7,16 +7,3 @@ router.get('/', secure.isAuthenticated, friend.list);
 router.post('/', secure.isAuthenticated , friend.create);
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-// const user = require('../middlewares/user.mid');
-// router.post('/:userId', secure.isAuthenticated , user.userExist, friend.create);

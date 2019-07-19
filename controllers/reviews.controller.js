@@ -1,5 +1,4 @@
 const createError = require('http-errors');
-const Resource = require('../models/resource.model');
 const Review = require('../models/review.model');
 const Friend = require('../models/friend.model');
 
@@ -36,4 +35,20 @@ module.exports.list = (req, res, next) => {
     })
     .catch(next)
   
+}
+
+module.exports.user = (req, res, next) => {
+  Review.find( { user: req.params.id } )
+  .populate('user')
+  .populate('resource')
+  .sort({ createdAt: -1 })
+  .then(userReviews => {
+    if (!userReviews) {
+      throw createError(404, 'User doesn\'t exist')
+    } else {
+     res.json(userReviews)
+
+    }
+  })
+  .catch(next)
 }
