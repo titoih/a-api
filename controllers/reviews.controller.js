@@ -34,7 +34,6 @@ module.exports.list = (req, res, next) => {
         })
     })
     .catch(next)
-  
 }
 
 module.exports.user = (req, res, next) => {
@@ -52,3 +51,16 @@ module.exports.user = (req, res, next) => {
   })
   .catch(next)
 }
+
+
+module.exports.users = (req, res, next) => {
+  Review.find({})
+    .populate('resource')
+    .populate('user')
+    .sort({ createdAt: -1 })
+    .then(reviews  => {
+      res.json(reviews)
+    })
+    .catch(next)
+}
+
