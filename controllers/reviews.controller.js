@@ -66,7 +66,8 @@ module.exports.users = (req, res, next) => {
 }
 
 module.exports.favourites = (req, res, next) => {
-  const reviewId = req.body.id;
+  const {reviewId} = req.body;
+  console.log(req.body)
   User.findById({ _id: req.user.id})
     .then(user => {
       const arrayFavourites = user.favourites
@@ -74,7 +75,7 @@ module.exports.favourites = (req, res, next) => {
         next(createError(409, "already in your favourites!"))
       } else {
         User.findByIdAndUpdate({_id:req.user.id}, { $push: { favourites:reviewId }})
-          .then(favourite => res.status(201).json(user))
+          .then(favourite => res.status(201).json(favourite))
       }
     })
     .catch(next)
