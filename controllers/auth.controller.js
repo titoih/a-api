@@ -25,7 +25,6 @@ module.exports.register = (req, res, next) => {
   
 }
 module.exports.login = (req, res, next) => {
-  console.log(req.body)
   passport.authenticate('auth-local', (error, user, message) => {
     if (error) {
       next(error);
