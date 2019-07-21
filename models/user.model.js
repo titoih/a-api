@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema({
     required: 'nickName necesario',
     unique: true,
     minlength: 3
+  },
+  favourites: {
+    type:[String]
   }
 }, {
     timestamps: true,

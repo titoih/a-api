@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const Review = require('../models/review.model');
 const Friend = require('../models/friend.model');
+const User = require('../models/user.model');
 
 module.exports.create = (req, res, next) => {
   const review = new Review ({
@@ -64,3 +65,17 @@ module.exports.users = (req, res, next) => {
     .catch(next)
 }
 
+module.exports.favourites = (req, res, next) => {
+  const reviewId = req.body.id;
+  User.findById({ _id: req.user.id})
+    .then(user => {
+      const arrayFavourites = user.favourites
+      if(arrayFavourites.includes(reviewId)){
+        next(createError(409, "already in your favourites!"))
+      } else {
+        User.findByIdAndUpdate({_id:req.user.id}, { $push: { favourites:reviewId }})
+          .then(favourite => res.status(201).json(user))
+      }
+    })
+    .catch(next)
+}
