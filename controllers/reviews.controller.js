@@ -65,18 +65,71 @@ module.exports.users = (req, res, next) => {
     .catch(next)
 }
 
-module.exports.favourites = (req, res, next) => {
+module.exports.addFavourites = (req, res, next) => {
   const {reviewId} = req.body;
-  console.log(req.body)
   User.findById({ _id: req.user.id})
+    .populate('user')
+    .populate('resource')
+    .populate('reviews')
     .then(user => {
       const arrayFavourites = user.favourites
       if(arrayFavourites.includes(reviewId)){
         next(createError(409, "already in your favourites!"))
       } else {
         User.findByIdAndUpdate({_id:req.user.id}, { $push: { favourites:reviewId }})
-          .then(favourite => res.status(201).json(favourite))
+
+          .then((favourite) => {
+            console.log(favourite)
+            res.status(201).json(favourite)
+          })
       }
     })
     .catch(next)
 }
+
+module.exports.ShowFavouriteReviews = (req, res, next) => {
+  const promises = [];
+  User.findById({ _id: req.user.id })
+    .then((user) => {
+      user.favourites.map((element) => {
+        promises.push(Review.find({ _id: element })
+          .populate('reviews')
+          .populate('resource')
+          .populate('user'));
+      });
+      Promise.all(promises)
+        .then(values => {
+          res.status(201).json([...values ])
+        });
+    })
+    .catch(next);
+};
+
+// module.exports.show = (req, res, next) => {
+//   User.find({favourites: {$all:review.favourites}})
+//   .populate('reviews')
+//   .populate('resource')
+//   .populate('user')
+//   .then(favourites => {
+//             console.log(favourites)
+//             res.status(201).json(favourites)
+//   })
+// }
+
+// console.log(review)
+//         res.status(201).json(review)
+
+// .then(review => {
+//   User.find({favourites: {$all:review.favourites}})
+//     .populate('reviews')
+//     .populate('resource')
+//     .populate('user')
+//       .then(favourites => {
+//         console.log(favourites)
+//         res.status(201).json(favourites)
+//       })
+// })
+
+  //   Review.findById({_id: a })
+    //     .then(review => { console.log(review) })
+    // })
