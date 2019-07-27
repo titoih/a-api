@@ -79,7 +79,6 @@ module.exports.addFavourites = (req, res, next) => {
         User.findByIdAndUpdate({_id:req.user.id}, { $push: { favourites:reviewId }})
 
           .then((favourite) => {
-            console.log(favourite)
             res.status(201).json(favourite)
           })
       }
@@ -104,32 +103,3 @@ module.exports.ShowFavouriteReviews = (req, res, next) => {
     })
     .catch(next);
 };
-
-// module.exports.show = (req, res, next) => {
-//   User.find({favourites: {$all:review.favourites}})
-//   .populate('reviews')
-//   .populate('resource')
-//   .populate('user')
-//   .then(favourites => {
-//             console.log(favourites)
-//             res.status(201).json(favourites)
-//   })
-// }
-
-// console.log(review)
-//         res.status(201).json(review)
-
-// .then(review => {
-//   User.find({favourites: {$all:review.favourites}})
-//     .populate('reviews')
-//     .populate('resource')
-//     .populate('user')
-//       .then(favourites => {
-//         console.log(favourites)
-//         res.status(201).json(favourites)
-//       })
-// })
-
-  //   Review.findById({_id: a })
-    //     .then(review => { console.log(review) })
-    // })

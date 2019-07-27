@@ -25,7 +25,6 @@ const countBreeds = async () => {
           kind: "Film"
         })
       })
-      // console.log(response.data.results)
     })
     .catch(error => {
       console.log(error)

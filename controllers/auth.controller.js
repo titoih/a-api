@@ -1,5 +1,4 @@
 const User = require('../models/user.model');
-
 const createError = require('http-errors');
 const passport = require('passport');
 
@@ -57,6 +56,18 @@ module.exports.user = (req, res, next) => {
   .catch(next)
 }
 
+
+module.exports.doEdit = (req, res, next) => {
+
+  const user = req.user;
+  console.log(req.body)
+  console.log(req.user)
+  Object.keys(req.body).forEach(prop => user[prop] = req.body[prop]);
+  if (req.file) user.avatarURL = req.file.secure_url;
+    user.save()
+      .then(user => res.status(201).json(user))
+      .catch(next)
+}
 
 module.exports.logout = (req, res, next) => {
   req.logout();

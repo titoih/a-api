@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 const EMAIL_PATTERN = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+const URL_PATTERN = /(https?:\/\/.*\.(?:png|jpg))/i;
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -22,6 +23,10 @@ const userSchema = new mongoose.Schema({
   },
   favourites: {
     type:[String]
+  },
+  avatarURL: {
+    type: String,
+    match: [URL_PATTERN, 'Invalid avatar URL pattern']
   }
 }, {
     timestamps: true,
