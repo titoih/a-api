@@ -60,8 +60,6 @@ module.exports.user = (req, res, next) => {
 module.exports.doEdit = (req, res, next) => {
 
   const user = req.user;
-  console.log(req.body)
-  console.log(req.user)
   Object.keys(req.body).forEach(prop => user[prop] = req.body[prop]);
   if (req.file) user.avatarURL = req.file.secure_url;
     user.save()

@@ -53,7 +53,6 @@ module.exports.user = (req, res, next) => {
   .catch(next)
 }
 
-
 module.exports.users = (req, res, next) => {
   Review.find({})
     .populate('resource')
